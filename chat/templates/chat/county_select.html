@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your County - USU Extension</title>
+    {% load static %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(15, 36, 57, 0.15);
+            padding: 48px;
+            max-width: 480px;
+            width: 100%;
+            border: 1px solid rgba(15, 36, 57, 0.08);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0F2439;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #6b7280;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0F2439;
+            margin-bottom: 8px;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            font-family: inherit;
+            border: 2px solid #e8ecef;
+            border-radius: 12px;
+            background-color: #fafbfc;
+            color: #0F2439;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230F2439' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        .form-group select:hover {
+            border-color: #c5cbd3;
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: #0F2439;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(15, 36, 57, 0.1);
+        }
+
+        .continue-button {
+            width: 100%;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #0F2439 0%, #1a3d5a 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(15, 36, 57, 0.2);
+            letter-spacing: 0.3px;
+        }
+
+        .continue-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15, 36, 57, 0.3);
+            background: linear-gradient(135deg, #1a3d5a 0%, #0F2439 100%);
+        }
+
+        .continue-button:active {
+            transform: translateY(0);
+        }
+
+        .continue-button:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Select Your County</h1>
+            <p>Choose your Utah county to get personalized horticulture assistance</p>
+        </div>
+        <form id="countyForm" action="#" method="get">
+            <div class="form-group">
+                <label for="countySelect">County</label>
+                <select id="countySelect" name="county" required>
+                    <option value="">-- Select a county --</option>
+                    <option value="Beaver">Beaver</option>
+                    <option value="Box Elder">Box Elder</option>
+                    <option value="Cache">Cache</option>
+                    <option value="Carbon">Carbon</option>
+                    <option value="Daggett">Daggett</option>
+                    <option value="Davis">Davis</option>
+                    <option value="Duchesne">Duchesne</option>
+                    <option value="Emery">Emery</option>
+                    <option value="Garfield">Garfield</option>
+                    <option value="Grand">Grand</option>
+                    <option value="Iron">Iron</option>
+                    <option value="Juab">Juab</option>
+                    <option value="Kane">Kane</option>
+                    <option value="Millard">Millard</option>
+                    <option value="Morgan">Morgan</option>
+                    <option value="Piute">Piute</option>
+                    <option value="Rich">Rich</option>
+                    <option value="Salt Lake">Salt Lake</option>
+                    <option value="San Juan">San Juan</option>
+                    <option value="Sanpete">Sanpete</option>
+                    <option value="Sevier">Sevier</option>
+                    <option value="Summit">Summit</option>
+                    <option value="Tooele">Tooele</option>
+                    <option value="Uintah">Uintah</option>
+                    <option value="Utah">Utah</option>
+                    <option value="Wasatch">Wasatch</option>
+                    <option value="Washington">Washington</option>
+                    <option value="Wayne">Wayne</option>
+                    <option value="Weber">Weber</option>
+                </select>
+            </div>
+            <button type="submit" class="continue-button" id="continueBtn" disabled>Continue</button>
+        </form>
+    </div>
+    <script src="{% static 'chat/county_select.js' %}"></script>
+</body>
+</html>

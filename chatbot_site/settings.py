@@ -4,8 +4,15 @@ Django settings for chatbot_site project.
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+from dotenv import load_dotenv
+
+# Load environment variables from .env (project root)
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
+
+import os
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 
 # Quick-start development settings - unsuitable for production
@@ -86,3 +93,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/stable/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# OpenAI (loaded from .env; do not hardcode)
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
