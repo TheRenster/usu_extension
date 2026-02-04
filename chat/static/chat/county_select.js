@@ -1,34 +1,86 @@
-// County dropdown: store selection in localStorage and redirect to chat
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('countyForm');
-    const countySelect = document.getElementById('countySelect');
-    const continueBtn = document.getElementById('continueBtn');
-
-    // Restore previous selection if returning to page
-    const previousCounty = localStorage.getItem('selected_county');
-    if (previousCounty) {
-        const option = Array.from(countySelect.options).find(o => o.value === previousCounty);
-        if (option) {
-            countySelect.value = previousCounty;
-        }
+function initMap() {
+    if (typeof L === "undefined") {
+        console.error("Leaflet not loaded");
+        return;
     }
 
-    // Enable Continue when a county is selected
-    countySelect.addEventListener('change', function() {
-        continueBtn.disabled = !this.value;
-    });
-
-    // If a county is already selected on load, enable the button
-    if (countySelect.value) {
-        continueBtn.disabled = false;
+    const mapElement = document.getElementById("map");
+    if (!mapElement) {
+        console.error("#map element not found");
+        return;
     }
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const county = countySelect.value;
-        if (!county) return;
+    // Pass the DOM element so Leaflet never resolves id before element exists
+    const map = L.map(mapElement, {
+        zoomControl: false,
+        attributionControl: false
+    }).setView([39.3, -111.7], 7);
 
-        localStorage.setItem('selected_county', county);
-        window.location.href = '/chat/';
-    });
-});
+    const pastelColors = [
+        "#E8F0FA",  // light blue
+        "#F6EAF7",  // light lavender
+        "#FDF6E3",  // light cream
+        "#EAF5EA"   // light green
+    ];
+
+    function style(feature) {
+        const index = feature.properties.COUNTYFP
+            ? parseInt(feature.properties.COUNTYFP, 10) % pastelColors.length
+            : 0;
+
+        return {
+            fillColor: pastelColors[index],
+            fillOpacity: 1,
+            color: "#9CA3AF",
+            weight: 1.5
+        };
+    }
+
+    fetch(window.GEOJSON_URL)
+        .then(res => res.json())
+        .then(data => {
+
+            const geoLayer = L.geoJSON(data, {
+                style: style,
+                onEachFeature: function (feature, layer) {
+
+                    const name = feature.properties.NAME;
+
+                    layer.on({
+                        mouseover: function (e) {
+                            e.target.setStyle({
+                                fillColor: "#0F2439",
+                                color: "#0F2439",
+                                weight: 2
+                            });
+                        },
+                        mouseout: function (e) {
+                            geoLayer.resetStyle(e.target);
+                        },
+                        click: function () {
+                            localStorage.setItem("selected_county", name);
+                            window.location.href = "/chat/";
+                        }
+                    });
+
+                    layer.bindTooltip(name, {
+                        permanent: true,
+                        direction: "center",
+                        className: "county-label"
+                    });
+                }
+            });
+
+            geoLayer.addTo(map);
+            map.fitBounds(geoLayer.getBounds(), { padding: [30, 30] });
+        })
+        .catch(err => console.error("GeoJSON load error:", err));
+}
+
+// Run only after DOM is ready; if already loaded, defer one tick so #map is in the DOM
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initMap);
+} else {
+    setTimeout(initMap, 0);
+}
+
