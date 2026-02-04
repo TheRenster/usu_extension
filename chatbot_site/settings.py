@@ -96,3 +96,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # OpenAI (loaded from .env; do not hardcode)
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
+
+# Backend data (fact sheets DB + county contacts CSV)
+FACT_SHEETS_DB_PATH = BASE_DIR / "Backend" / "fact_sheets.db"
+COUNTY_CONTACTS_CSV_PATH = BASE_DIR / "Backend" / "County Contact info - Sheet1.csv"
