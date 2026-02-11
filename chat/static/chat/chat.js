@@ -42,8 +42,12 @@ function hideSuggestions() {
 
 function addMessage(text, isUser) {
     const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
-    messageDiv.textContent = text;
+    messageDiv.className = `message ${isUser ? 'user' : 'bot chat-message'}`;
+    if (isUser) {
+        messageDiv.textContent = text;
+    } else {
+        messageDiv.innerHTML = marked.parse(text);
+    }
     chatMessages.appendChild(messageDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }

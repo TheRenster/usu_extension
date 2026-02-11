@@ -45,7 +45,16 @@ INSTRUCTIONS:
 2. Then cite the relevant fact sheets with their titles and links
 3. End by asking if they need more help
 
-Keep responses concise and helpful."""
+Keep responses concise and helpful.
+
+Format all responses using clean Markdown.
+Use:
+- Paragraph spacing
+- Bullet points when appropriate
+- Bold section headers when helpful
+- Proper Markdown links: [Title](URL)
+
+Do not return raw HTML."""
 
         user_content = f"Question: {message_clean}\n\nAvailable resources:{context}"
 
