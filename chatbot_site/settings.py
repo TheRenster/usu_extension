@@ -24,7 +24,11 @@ SECRET_KEY = 'django-insecure-dev-key-change-in-production'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['usu-extension-test-905684985699.europe-west1.run.app', 'test-usu-extension-905684985699.us-west1.run.app']
+ALLOWED_HOSTS = [
+        'usu-extension-test-905684985699.europe-west1.run.app', 
+        'test-usu-extension-905684985699.us-west1.run.app',
+        '127.0.0.1',
+        ]
 
 
 # Application definition
@@ -37,6 +41,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -87,7 +92,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/stable/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/stable/ref/settings/#default-auto-field
