@@ -25,10 +25,16 @@ SECRET_KEY = 'django-insecure-dev-key-change-in-production'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-        'usu-extension-test-905684985699.europe-west1.run.app', 
-        'test-usu-extension-905684985699.us-west1.run.app',
-        '127.0.0.1',
-        ]
+    'usu-extension-test-905684985699.europe-west1.run.app',
+    'test-usu-extension-905684985699.us-west1.run.app',
+    '127.0.0.1',
+]
+
+# Required for CSRF when serving on HTTPS (e.g. Cloud Run)
+CSRF_TRUSTED_ORIGINS = [
+    'https://usu-extension-test-905684985699.europe-west1.run.app',
+    'https://test-usu-extension-905684985699.us-west1.run.app',
+]
 
 
 # Application definition
