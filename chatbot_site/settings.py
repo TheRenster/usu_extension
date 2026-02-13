@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     'https://usu-extension-test-905684985699.europe-west1.run.app',
     'https://test-usu-extension-905684985699.us-west1.run.app',
+    'https://usu-extension-381213932906.us-west1.run.app',
 ]
 
 
