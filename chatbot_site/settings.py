@@ -27,7 +27,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'usu-extension-test-905684985699.europe-west1.run.app',
     'test-usu-extension-905684985699.us-west1.run.app',
-    '127.0.0.1'
+    '127.0.0.1',
     'usu-extension-381213932906.us-west1.run.app',
 ]
 
