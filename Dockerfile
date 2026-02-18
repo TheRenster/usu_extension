@@ -16,4 +16,5 @@ EXPOSE 8080
 
 # Start the FastAPI app with Uvicorn
 # Use sh -c so ${PORT} is substituted correctly
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080} --workers 1 --reload"]
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080} --workers 1"]
+
