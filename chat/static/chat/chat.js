@@ -11,8 +11,13 @@ let isSending = false;
 // Minimum time (ms) to show the loading bubble so it's always visible
 var MIN_LOADING_MS = 500;
 
-// Load and display selected county
-const selectedCounty = localStorage.getItem('selected_county');
+// Load and display selected county (from localStorage or URL)
+(function() {
+    var params = new URLSearchParams(window.location.search);
+    var countyFromUrl = params.get('county');
+    if (countyFromUrl) localStorage.setItem('selected_county', countyFromUrl);
+})();
+var selectedCounty = localStorage.getItem('selected_county');
 if (selectedCounty) {
     countyNameSpan.textContent = selectedCounty;
     countyBadge.style.display = 'inline-block';
@@ -47,6 +52,10 @@ function addMessage(text, isUser) {
         messageDiv.textContent = text;
     } else {
         messageDiv.innerHTML = marked.parse(text);
+        messageDiv.querySelectorAll('a').forEach(function(a) {
+            a.setAttribute('target', '_blank');
+            a.setAttribute('rel', 'noopener');
+        });
     }
     chatMessages.appendChild(messageDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;

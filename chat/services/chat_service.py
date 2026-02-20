@@ -3,9 +3,12 @@ Chat service: retrieval from fact sheets + OpenAI with county-constrained assist
 Uses Backend fact_sheets.db and County Contact CSV when available.
 """
 
+import re
+
 from django.conf import settings
 from openai import OpenAI
 
+from chat.services.article_search import resolve_uploaded_link
 from chat.services.retrieval import get_county_contacts, retrieve_relevant_papers
 
 FALLBACK_REPLY = "Sorry, I'm unable to generate a response right now. Please try again later."
@@ -26,16 +29,20 @@ def get_reply(message: str, county: str) -> dict:
 
     db_path = getattr(settings, "FACT_SHEETS_DB_PATH", None)
     csv_path = getattr(settings, "COUNTY_CONTACTS_CSV_PATH", None)
+    articles_db_path = getattr(settings, "EXTENSION_ARTICLES_DB_PATH", None)
 
     papers = retrieve_relevant_papers(message_clean, db_path)
 
     if papers:
         context = ""
         for idx, p in enumerate(papers, 1):
+            link = p["link"]
+            if articles_db_path:
+                link = resolve_uploaded_link(link, articles_db_path)
             context += f"\nDocument {idx}: {p['title']}\n"
             context += f"Subject: {p['subject']}\n"
             context += f"Content excerpt: {p['content']}\n"
-            context += f"Link: {p['link']}\n"
+            context += f"Link: {link}\n"
 
         system_content = f"""You are Agnes, a helpful agricultural extension assistant for Utah State University Extension.
 You help people in {county_display} County, Utah.
@@ -73,6 +80,12 @@ Do not return raw HTML."""
                 (response.choices[0].message.content or "").strip()
                 if response.choices
                 else ""
+            )
+            # Fix uploaded:// links with spaces so Markdown renders one clickable link
+            reply = re.sub(
+                r"\]\(uploaded://(.+?\.pdf)\)",
+                lambda m: "](uploaded://" + m.group(1).replace(" ", "%20") + ")",
+                reply,
             )
             return {"reply": reply or FALLBACK_REPLY}
         except Exception:
