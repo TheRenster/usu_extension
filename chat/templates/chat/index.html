@@ -200,14 +200,22 @@
 
         .county-badge {
             display: inline-block;
+            margin-top: 8px;
+        }
+        .county-badge a {
+            display: inline-block;
             background: rgba(255, 255, 255, 0.2);
             color: white;
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: 500;
-            margin-top: 8px;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .county-badge a:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         /* Empty state: suggested prompts */
@@ -291,7 +299,7 @@
         <div class="chat-header">
             <h1>USU Extension Assistant</h1>
             <div class="county-badge" id="countyBadge" style="display: none;">
-                County: <span id="countyName"></span>
+                <a href="{% url 'county_select' %}">County: <span id="countyName"></span></a>
             </div>
         </div>
         <div class="chat-messages" id="chatMessages">

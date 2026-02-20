@@ -118,3 +118,6 @@ COUNTY_CONTACTS_CSV_PATH = BASE_DIR / "Backend" / "County Contact info - Sheet1.
 # Extension articles (PDF URLs) for search
 EXTENSION_ARTICLES_DB_PATH = BASE_DIR / "extension_articles.db"
 EXTENSION_PRODUCTS_CSV_PATH = BASE_DIR / "extension-products_2026_02_06_with-domain.csv"
+
+# AG Extension Q&A API (12k articles); empty = use local retrieval only
+AG_EXTENSION_API_URL = os.environ.get("AG_EXTENSION_API_URL", "https://fastapi-service-381213932906.us-central1.run.app").strip()

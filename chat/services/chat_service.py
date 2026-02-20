@@ -1,11 +1,18 @@
 """
 Chat service: retrieval from fact sheets + OpenAI with county-constrained assistant.
 Uses Backend fact_sheets.db and County Contact CSV when available.
+When AG_EXTENSION_API_URL is set, calls that API first (12k-article assistant).
 """
 
+import json
+import logging
 import re
+from urllib.request import Request, urlopen
+from urllib.error import URLError, HTTPError
 
 from django.conf import settings
+
+logger = logging.getLogger(__name__)
 from openai import OpenAI
 
 from chat.services.article_search import resolve_uploaded_link
@@ -15,17 +22,61 @@ FALLBACK_REPLY = "Sorry, I'm unable to generate a response right now. Please try
 API_KEY_MISSING_MESSAGE = "Sorry, I'm unable to generate a response right now. Please try again later."
 
 
+def _call_ag_extension_api(message: str) -> str | None:
+    """POST /ask to AG Extension API. Returns response text or None on failure."""
+    base = getattr(settings, "AG_EXTENSION_API_URL", "") or ""
+    if not base:
+        return None
+    url = base.rstrip("/") + "/ask"
+    try:
+        req = Request(
+            url,
+            data=json.dumps({"message": message}).encode(),
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        with urlopen(req, timeout=65) as resp:
+            data = json.loads(resp.read().decode())
+            return (data.get("response") or "").strip() or None
+    except HTTPError as e:
+        body = e.read().decode() if e.fp else ""
+        try:
+            detail = json.loads(body).get("detail", body)
+        except Exception:
+            detail = body or str(e)
+        logger.warning("AG Extension API error %s: %s", e.code, detail)
+        return None
+    except (URLError, json.JSONDecodeError, OSError) as e:
+        logger.warning("AG Extension API call failed: %s", e)
+        return None
+
+
 def get_reply(message: str, county: str) -> dict:
     """
     Get a reply: retrieve fact sheets, then OpenAI with context or county-contact fallback.
+    When AG_EXTENSION_API_URL is set, calls that API first.
     Returns {"reply": "<text>"} on success, {"error": "<message>"} on missing API key.
     """
+    county_display = (county or "Utah").strip() or "Utah"
+    message_clean = (message or "").strip() or "Hello"
+
+    api_url = getattr(settings, "AG_EXTENSION_API_URL", "") or ""
+    if api_url:
+        api_message = f"The user is in {county_display} County, Utah. Question: {message_clean}"
+        reply = _call_ag_extension_api(api_message)
+        if reply:
+            logger.info("Chat reply from AG Extension API")
+            reply = re.sub(
+                r"\]\(uploaded://(.+?\.pdf)\)",
+                lambda m: "](uploaded://" + m.group(1).replace(" ", "%20") + ")",
+                reply,
+            )
+            return {"reply": reply or FALLBACK_REPLY}
+        logger.info("AG Extension API returned no reply, using local path")
+
     api_key = getattr(settings, "OPENAI_API_KEY", "") or ""
     if not api_key:
         return {"error": API_KEY_MISSING_MESSAGE}
-
-    county_display = (county or "Utah").strip() or "Utah"
-    message_clean = (message or "").strip() or "Hello"
 
     db_path = getattr(settings, "FACT_SHEETS_DB_PATH", None)
     csv_path = getattr(settings, "COUNTY_CONTACTS_CSV_PATH", None)
@@ -65,6 +116,7 @@ Do not return raw HTML."""
 
         user_content = f"Question: {message_clean}\n\nAvailable resources:{context}"
 
+        logger.info("Chat reply from local retrieval + OpenAI")
         try:
             client = OpenAI(api_key=api_key)
             response = client.chat.completions.create(
@@ -91,6 +143,7 @@ Do not return raw HTML."""
         except Exception:
             return {"reply": FALLBACK_REPLY}
 
+    logger.info("Chat reply from local fallback (no matching fact sheets)")
     contacts = get_county_contacts(county_display, csv_path)
     if contacts:
         contact_lines = []
