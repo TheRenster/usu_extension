@@ -1,5 +1,3 @@
-fastapi 
-uvicorn 
 pandas
 nest-asyncio 
 python-dotenv
