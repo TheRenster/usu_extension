@@ -21,6 +21,37 @@ from chat.services.retrieval import get_county_contacts, retrieve_relevant_paper
 FALLBACK_REPLY = "Sorry, I'm unable to generate a response right now. Please try again later."
 API_KEY_MISSING_MESSAGE = "Sorry, I'm unable to generate a response right now. Please try again later."
 
+# Max number of prior exchanges to send as context (each exchange = user + assistant)
+MAX_CHAT_HISTORY_EXCHANGES = 10
+
+
+def _identify_from_image(api_key: str, image_base64: str, text_prompt: str | None) -> str | None:
+    """Use vision model to identify pest/weed/disease from image. Returns identification text or None."""
+    try:
+        client = OpenAI(api_key=api_key)
+        content = []
+        if text_prompt and text_prompt.strip():
+            content.append({"type": "text", "text": text_prompt.strip()})
+        content.append({
+            "type": "image_url",
+            "image_url": {"url": f"data:image/jpeg;base64,{image_base64}"},
+        })
+        if not content:
+            content.append({
+                "type": "text",
+                "text": "Identify any pests, weeds, or plant diseases visible. Provide common/scientific name, brief description, and keywords for fact sheet search.",
+            })
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[{"role": "user", "content": content}],
+            max_tokens=400,
+        )
+        if response.choices and response.choices[0].message.content:
+            return (response.choices[0].message.content or "").strip() or None
+    except Exception as e:
+        logger.warning("Vision identification failed: %s", e)
+    return None
+
 
 def _call_ag_extension_api(message: str) -> str | None:
     """POST /ask to AG Extension API. Returns response text or None on failure."""
@@ -51,14 +82,31 @@ def _call_ag_extension_api(message: str) -> str | None:
         return None
 
 
-def get_reply(message: str, county: str) -> dict:
+def get_reply(
+    message: str,
+    county: str,
+    *,
+    category: str = "",
+    subcategory: str = "",
+    chat_history: list | None = None,
+    image_base64: str | None = None,
+) -> dict:
     """
     Get a reply: retrieve fact sheets, then OpenAI with context or county-contact fallback.
-    When AG_EXTENSION_API_URL is set, calls that API first.
+    When AG_EXTENSION_API_URL is set, calls that API first (single message; no history).
+    Optional: category/subcategory (included in prompt), chat_history (local path only), image_base64 (vision).
     Returns {"reply": "<text>"} on success, {"error": "<message>"} on missing API key.
     """
     county_display = (county or "Utah").strip() or "Utah"
     message_clean = (message or "").strip() or "Hello"
+
+    api_key = getattr(settings, "OPENAI_API_KEY", "") or ""
+
+    # If image provided and we have a key, run vision first and prepend identification to the message
+    if image_base64 and image_base64.strip() and api_key:
+        identification = _identify_from_image(api_key, image_base64.strip(), message_clean or None)
+        if identification:
+            message_clean = f"{identification}\n\nUser question: {message_clean}" if message_clean else identification
 
     api_url = getattr(settings, "AG_EXTENSION_API_URL", "") or ""
     if api_url:
@@ -74,7 +122,6 @@ def get_reply(message: str, county: str) -> dict:
             return {"reply": reply or FALLBACK_REPLY}
         logger.info("AG Extension API returned no reply, using local path")
 
-    api_key = getattr(settings, "OPENAI_API_KEY", "") or ""
     if not api_key:
         return {"error": API_KEY_MISSING_MESSAGE}
 
@@ -95,8 +142,14 @@ def get_reply(message: str, county: str) -> dict:
             context += f"Content excerpt: {p['content']}\n"
             context += f"Link: {link}\n"
 
+        category_line = ""
+        if subcategory and subcategory.strip():
+            category_line = f" The user is asking about: {subcategory.strip()}."
+        elif category and category.strip():
+            category_line = f" The user is asking about: {category.strip()}."
+
         system_content = f"""You are Agnes, a helpful agricultural extension assistant for Utah State University Extension.
-You help people in {county_display} County, Utah.
+You help people in {county_display} County, Utah.{category_line}
 
 INSTRUCTIONS:
 1. Provide a brief summary (2-3 sentences) of what might be causing the issue or answering their question
@@ -116,15 +169,21 @@ Do not return raw HTML."""
 
         user_content = f"Question: {message_clean}\n\nAvailable resources:{context}"
 
+        # Build messages: system, optional chat history, current user message
+        messages = [{"role": "system", "content": system_content}]
+        if chat_history and isinstance(chat_history, list):
+            n = MAX_CHAT_HISTORY_EXCHANGES * 2  # cap total messages
+            for m in chat_history[-n:]:
+                if isinstance(m, dict) and m.get("role") and m.get("content") is not None:
+                    messages.append({"role": m["role"], "content": str(m["content"])})
+        messages.append({"role": "user", "content": user_content})
+
         logger.info("Chat reply from local retrieval + OpenAI")
         try:
             client = OpenAI(api_key=api_key)
             response = client.chat.completions.create(
                 model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": system_content},
-                    {"role": "user", "content": user_content},
-                ],
+                messages=messages,
                 temperature=0.7,
                 max_tokens=600,
             )

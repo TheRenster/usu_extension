@@ -5,8 +5,41 @@ const sendButton = document.getElementById('sendButton');
 const countyBadge = document.getElementById('countyBadge');
 const countyNameSpan = document.getElementById('countyName');
 const suggestionsSection = document.getElementById('suggestionsSection');
+const mainCategorySelect = document.getElementById('mainCategory');
+const subcategorySelect = document.getElementById('subcategory');
+const imageInput = document.getElementById('imageInput');
 
 let isSending = false;
+
+// Chat history for context (max 20 messages)
+var chatHistory = [];
+
+// Subcategory map from server
+var subcategoryMap = {};
+(function() {
+    var el = document.getElementById('subcategory-map-json');
+    if (el && el.textContent) {
+        try {
+            subcategoryMap = JSON.parse(el.textContent);
+        } catch (e) {}
+    }
+})();
+
+function updateSubcategoryOptions() {
+    if (!subcategorySelect || !subcategoryMap) return;
+    var main = mainCategorySelect ? mainCategorySelect.value : 'Other';
+    var subs = subcategoryMap[main] || subcategoryMap['Other'] || ['Other'];
+    subcategorySelect.innerHTML = '';
+    subs.forEach(function(s) {
+        var opt = document.createElement('option');
+        opt.value = s;
+        opt.textContent = s;
+        subcategorySelect.appendChild(opt);
+    });
+}
+if (mainCategorySelect) {
+    mainCategorySelect.addEventListener('change', updateSubcategoryOptions);
+}
 
 // Minimum time (ms) to show the loading bubble so it's always visible
 var MIN_LOADING_MS = 500;
@@ -78,25 +111,25 @@ function removeLoadingBubble() {
 }
 
 async function sendMessage() {
-    const message = messageInput.value.trim();
-    if (!message) return;
+    const message = (messageInput && messageInput.value ? messageInput.value.trim() : '') || '';
+    const hasImage = imageInput && imageInput.files && imageInput.files.length > 0;
+    if (!message && !hasImage) return;
     if (isSending) return;
 
     isSending = true;
     hideSuggestions();
 
-    // Add user message to chat
-    addMessage(message, true);
+    const userContent = message || '(User sent a photo for identification)';
+    addMessage(userContent, true);
     messageInput.value = '';
     sendButton.disabled = true;
-    messageInput.disabled = true;
+    if (messageInput) messageInput.disabled = true;
+    if (imageInput) imageInput.disabled = true;
 
-    // Append bot loading bubble (same container as chat bubbles)
     addLoadingBubble();
     var loadingShownAt = Date.now();
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    // Force the browser to render the loader before calling fetch (two frames)
     function nextFrame() {
         return new Promise(function (resolve) {
             if (typeof requestAnimationFrame !== 'undefined') {
@@ -110,7 +143,27 @@ async function sendMessage() {
     await nextFrame();
 
     const county = localStorage.getItem('selected_county') || '';
+    const category = mainCategorySelect ? mainCategorySelect.value : '';
+    const subcategory = subcategorySelect ? subcategorySelect.value : '';
     const csrftoken = getCookie('csrftoken');
+
+    var body = {
+        message: message || '',
+        county: county,
+        category: category,
+        subcategory: subcategory,
+        chat_history: chatHistory.slice(-20)
+    };
+
+    if (hasImage && imageInput.files[0]) {
+        try {
+            const base64 = await readFileAsBase64(imageInput.files[0]);
+            if (base64) body.image_base64 = base64;
+        } catch (e) {
+            console.error('Image read failed', e);
+        }
+        imageInput.value = '';
+    }
 
     try {
         const response = await fetch('/api/chat', {
@@ -119,30 +172,51 @@ async function sendMessage() {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken
             },
-            body: JSON.stringify({ message: message, county: county })
+            body: JSON.stringify(body)
         });
         const data = await response.json();
         var text = response.ok ? (data.reply || 'Error: No reply received') : (data.error || 'Something went wrong.');
 
-        // Keep loading bubble visible for at least MIN_LOADING_MS so user always sees it
         var elapsed = Date.now() - loadingShownAt;
         var wait = Math.max(0, MIN_LOADING_MS - elapsed);
         await new Promise(function (r) { setTimeout(r, wait); });
 
         removeLoadingBubble();
         addMessage(text, false);
+
+        chatHistory.push({ role: 'user', content: userContent });
+        chatHistory.push({ role: 'assistant', content: text });
+        if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
     } catch (e) {
         var elapsed = Date.now() - loadingShownAt;
         var wait = Math.max(0, MIN_LOADING_MS - elapsed);
         await new Promise(function (r) { setTimeout(r, wait); });
         removeLoadingBubble();
         addMessage('Error: Could not connect to server', false);
+        chatHistory.push({ role: 'user', content: userContent });
+        chatHistory.push({ role: 'assistant', content: 'Error: Could not connect to server' });
     } finally {
         sendButton.disabled = false;
-        messageInput.disabled = false;
+        if (messageInput) messageInput.disabled = false;
+        if (imageInput) imageInput.disabled = false;
         isSending = false;
-        messageInput.focus();
+        if (messageInput) messageInput.focus();
     }
+}
+
+function readFileAsBase64(file) {
+    return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var result = reader.result;
+            if (result && result.indexOf('base64,') !== -1) {
+                result = result.split('base64,')[1] || '';
+            }
+            resolve(result || null);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
 }
 
 // Suggested prompts: click inserts and submits

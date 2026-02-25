@@ -96,6 +96,7 @@ def get_county_contacts(county, csv_path):
     """
     Return list of dicts with keys: name, title, email, phone.
     Matches rows where the County column contains the given county name.
+    If CSV has a Score column, prefers rows with Score == 1 when any exist.
     """
     if not county or not csv_path or not Path(csv_path).exists():
         return []
@@ -106,15 +107,28 @@ def get_county_contacts(county, csv_path):
     try:
         with open(csv_path, newline="", encoding="utf-8") as f:
             reader = csv.DictReader(f)
-            for row in reader:
-                cell = (row.get("County") or "").lower()
-                if county_lower in cell:
-                    out.append({
-                        "name": row.get("Name") or "",
-                        "title": row.get("Title") or "",
-                        "email": row.get("Email") or "",
-                        "phone": row.get("Phone") or "",
-                    })
+            rows = list(reader)
+            fieldnames = reader.fieldnames or []
+            has_score = "Score" in fieldnames
+
+        matches = []
+        for row in rows:
+            cell = (row.get("County") or "").lower()
+            if county_lower in cell:
+                matches.append(row)
+
+        if has_score and matches:
+            priority = [r for r in matches if str(r.get("Score", "")).strip() == "1"]
+            if priority:
+                matches = priority
+
+        for row in matches:
+            out.append({
+                "name": row.get("Name") or "",
+                "title": row.get("Title") or "",
+                "email": row.get("Email") or "",
+                "phone": row.get("Phone") or "",
+            })
     except Exception:
         pass
     return out

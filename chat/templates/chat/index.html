@@ -146,6 +146,40 @@
             border-top: 1px solid #e8ecef;
             gap: 12px;
             background-color: #ffffff;
+            flex-wrap: wrap;
+        }
+
+        .chat-input-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .chat-category-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .chat-category-row label {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .chat-category-row select {
+            padding: 8px 12px;
+            border: 1px solid #e8ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #fafbfc;
+        }
+
+        .chat-image-label {
+            font-size: 13px;
+            color: #6b7280;
         }
 
         .chat-input {
@@ -314,18 +348,37 @@
             </div>
         </div>
         <div class="chat-input-container">
-            <input 
-                type="text" 
-                class="chat-input" 
-                id="messageInput" 
-                placeholder="Type your message here..."
-                autocomplete="off"
-            >
-            <button class="send-button" id="sendButton">Send</button>
+            <div class="chat-category-row">
+                <label for="mainCategory">Category:</label>
+                <select id="mainCategory">
+                    {% for cat in main_categories %}
+                    <option value="{{ cat }}">{{ cat }}</option>
+                    {% endfor %}
+                </select>
+                <label for="subcategory">Subcategory:</label>
+                <select id="subcategory">
+                    {% for sub in subcategory_map.Insects %}
+                    <option value="{{ sub }}">{{ sub }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="chat-input-row">
+                <label class="chat-image-label" for="imageInput">Optional photo:</label>
+                <input type="file" id="imageInput" accept="image/*" style="max-width:180px;">
+                <input 
+                    type="text" 
+                    class="chat-input" 
+                    id="messageInput" 
+                    placeholder="Type your message here..."
+                    autocomplete="off"
+                >
+                <button class="send-button" id="sendButton">Send</button>
+            </div>
         </div>
     </div>
 
+    {{ subcategory_map|json_script:"subcategory-map-json" }}
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="{% static 'chat/chat.js' %}?v=2"></script>
+    <script src="{% static 'chat/chat.js' %}?v=3"></script>
 </body>
 </html>
