@@ -1,0 +1,215 @@
+County,Weather Station,Zip Code,Elev. (feet),Average Annual Minimum Temperature (°F),Absolute Minimum (°F),Average and Minimum Hardiness Zones,Years of Data
+Beaver,Beaver Canyon Pwr House,84713,7275,-7.6,-16.6,"Zones 6a, 5a",22
+Beaver,Big Flat,72617,10349,-11.2,-23.8,"Zones 5b, 4b",30
+Beaver,Brimstone Res. - Milford 20WSW,84751,5620,-0.4,-11.2,"Zones 6b, 5b",30
+Beaver,Merchant Valley,15003,8703,-11.2,-27.4,"Zones 5b, 4a",29
+Beaver,Milford Muni AP,84751,5040,-13,-34.6,"Zones 5b, 3b",29
+Box Elder,Brigham City Waste Plt,84302,4230,-4,-25.6,"Zones 6b, 4a",30
+Box Elder,Cutler Dam,84304,4290,-2.2,-18.4,"Zones 6b, 5a",30
+Box Elder,Rosette,84329,5685,-5.8,-23.8,"Zones 6a, 4b",30
+Box Elder,Thiokol Plant 78,84307,4600,-25.6,-25.6,"Zones 4a, 4a",20
+Box Elder,Tremonton,84337,4310,3.2,-18.4,"Zones 7a, 5a",20
+Box Elder,Utah Test Range,84034,4440,-4,-25.6,"Zones 6b, 4a",28
+Cache,Dry Bread Pond,84317,8350,-7.6,-25.6,"Zones 6a, 4a",30
+Cache,Little Bear,84328,6544,-4,-23.8,"Zones 6b, 4b",29
+Cache,Logan 5 SW Exp. Farm,84321,4489,-14.8,-43.6,"Zones 5b, 2b",30
+Cache,Logan Cache AP,84321,4454,-13,-31,"Zones 5b, 3b",22
+Cache,Logan Radio KVNU,84321,4475,-9.4,-29.2,"Zones 6a, 4a",30
+Cache,Logan Utah State Univ.,84322,4790,-2.2,-11.2,"Zones 6b, 5b",30
+Cache,Monte Cristo,84341,8960,-11.2,-41.8,"Zones 5b, 2b",29
+Cache,Richmond,84333,4680,-7.6,-27.4,"Zones 6a, 4a",30
+Cache,Trenton,84338,4455,-9.4,-32.8,"Zones 6a, 3b",29
+Carbon,Bruin Point Sunnyside 6NNE U,84520,10200,-11.2,-23.8,"Zones 5b, 4b",29
+Carbon,Price Carbon Co AP,84501,5921,-2.2,-9.4,"Zones 6b, 6a",21
+Carbon,Scofield Skyline Mine,84526,8697,-11.2,-22,"Zones 5b, 4b",30
+Carbon,Sunnyside City Ctr,84520,6530,-0.4,-14.8,"Zones 6b, 5b",19
+Daggett,Cart Creek Utah,84023,6900,-9.4,-20.2,"Zones 6a, 4b",22
+Daggett,Flaming Gorge,84023,6244,-14.8,-36.4,"Zones 5b, 3a",30
+Daggett,Hickerson Park,84023,9145,-22,-32.8,"Zones 4b, 3b",29
+Daggett,Kings Point - Dutch John 16ESE,84023,5670,-13,-34.6,"Zones 5b, 3b",30
+Daggett,Manila,84046,6393,-11.2,-22,"Zones 5b, 4b",20
+Davis,Bountiful - Val Verda,84010,4540,6.8,-9.4,"Zones 7b, 6a",25
+Davis,Bountiful Bench,84010,4950,3.2,-16.6,"Zones 7a, 5a",30
+Davis,Farmington USU Field Stn.,84025,4380,5,-11.2,"Zones 7b, 5b",26
+Duchesne,Altamont,84001,6456,-11.2,-32.8,"Zones 5b, 3b",30
+Duchesne,Brown Duch,84001,10600,-16.6,-27.4,"Zones 5a, 4a",30
+Duchesne,Chepeta,84053,10592,-18.4,-31,"Zones 5a, 3b",29
+Duchesne,Duchesne,84021,5551,-11.2,-29.2,"Zones 5b, 4a",30
+Duchesne,Five Mile Duchesne 18SSE UTA,84021,8000,-0.4,-14.8,"Zones 6b, 5b",29
+Duchesne,Five Points Lake,84001,10940,-16.6,-29.2,"Zones 5a, 4a",29
+Duchesne,Horse Ridge Utah,84021,8480,-4,-9.4,"Zones 6b, 6a",22
+Duchesne,Indian Canyon,84021,9175,-7.6,-23.8,"Zones 6a, 4b",29
+Duchesne,Lakefork Basin,84001,10966,-16.6,-25.6,"Zones 5a, 4a",27
+Duchesne,Myton,84052,5082,-11.2,-27.4,"Zones 5b, 4a",30
+Duchesne,Neola,84053,5950,-9.4,-25.6,"Zones 6a, 4a",30
+Duchesne,Rock Creek,84073,7889,-11.2,-45.4,"Zones 5b, 2a",28
+Emery,Castle Dale,84513,5629,-9.4,-27.4,"Zones 6a, 4a",30
+Emery,Ferron,84523,5923,-2.2,-20.2,"Zones 6b, 4b",30
+Emery,Flattop Mountain Cleveland 1,84518,6120,5,-9.4,"Zones 7b, 6a",30
+Emery,Red Ridge Pine,84523,9009,-14.8,-25.6,"Zones 5b, 4a",29
+Garfield,Boulder,84716,6649,3.2,-11.2,"Zones 7a, 5b",30
+Garfield,Bryce Canyon Airport,84764,7585,-18.4,-31,"Zones 5a, 3b",20
+Garfield,Bryce Cyn NP HQRS,84717,7915,-5.8,-23.8,"Zones 6a, 4b",30
+Garfield,Escalante,84726,5810,1.4,-11.2,"Zones 7a, 5b",30
+Garfield,Panguitch,84759,6647,-13,-29.2,"Zones 5b, 4a",26
+Garfield,Widtsoe #3,84712,9640,-5.8,-18.4,"Zones 6a, 5a",29
+Grand,Arches NP HQS,84532,4093,6.8,-4,"Zones 7b, 6b",30
+Grand,Bryson Canyon Utah,84540,5320,3.2,-9.4,"Zones 7a, 6a",30
+Grand,Castle Valley,84532,4725,6.8,-4,"Zones 7b, 6b",20
+Grand,East Willow Creek,84540,8301,-9.4,-23.8,"Zones 6a, 4b",29
+Grand,Moab,84532,4053,6.8,-5.8,"Zones 7b, 6a",30
+Iron,Blowhard Mtn. Radar,84719,10694,-5.8,-20.2,"Zones 6a, 4b",17
+Iron,Brian Head,84719,9770,-11.2,-18.4,"Zones 5b, 5a",19
+Iron,Cedar City Muni AP,84721,5586,-7.6,-22,"Zones 6a, 4b",30
+Iron,Jensen Spring Beryl 12NNE,84714,5744,1.4,-16.6,"Zones 7a, 5a",30
+Iron,Kolob,84720,9206,-4,-14.8,"Zones 6b, 5b",26
+Iron,Midway Valley,84719,9800,-9.4,-20.2,"Zones 6a, 4b",29
+Iron,Parowan Power Plant,84761,5878,-2.2,-22,"Zones 6b, 4b",20
+Juab,Callao,84083,4342,-5.8,-23.8,"Zones 6a, 4b",30
+Juab,Fish Springs Refuge,84022,4357,-2.2,-18.4,"Zones 6b, 5a",27
+Juab,Levan,84639,5298,-5.8,-18.4,"Zones 6a, 5a",30
+Juab,Little Sahara Rec Area,84648,5230,-11.2,-32.8,"Zones 5b, 3b",30
+Juab,Mud Spring Eureka 13SW Utah,84628,5760,-4,-23.8,"Zones 6b, 4b",30
+Juab,Nephi,84648,5146,-4,-20.2,"Zones 6b, 4b",30
+Juab,Partoun,84083,4780,-9.4,-25.6,"Zones 6a, 4a",30
+Juab,Sevier Reservoir,84654,5330,-4,-23.8,"Zones 6b, 4b",30
+Kane,Agua Canyon,84717,8900,-2.2,-11.2,"Zones 6b, 5b",25
+Kane,Alton,84710,7098,-4,-23.8,"Zones 6b, 4b",30
+Kane,Assay Hatch 10SW,84735,8100,-4,-14.8,"Zones 6b, 5b",30
+Kane,Big Water,84741,4100,10.4,-2.2,"Zones 8a, 6b",29
+Kane,Bullfrog Basin,84533,3822,14,-0.4,"Zones 8a, 6b",24
+Kane,Harris Flat,84762,7800,-18.4,-40,"Zones 5a, 3a",29
+Kane,Kanab,84741,4900,5,-11.2,"Zones 7b, 5b",30
+Kane,Kodachrome Basin Park,84718,5805,-4,-22,"Zones 6b, 4b",30
+Kane,Long Valley Jct,84741,7464,-4,-22,"Zones 6b, 4b",29
+Kane,Orderville,84758,5460,-4,-20.2,"Zones 6b, 4b",25
+Millard,Black Cedar Fillmore 5E Utah,84631,6480,-0.4,-16.6,"Zones 6b, 5a",30
+Millard,Black Rock,84751,4900,-13,-36.4,"Zones 5b, 3a",30
+Millard,Delta,84624,4620,-7.6,-29.2,"Zones 6a, 4a",30
+Millard,Deseret,84624,4590,-7.6,-23.8,"Zones 6a, 4b",30
+Millard,Eskdale,84728,4980,-11.2,-27.4,"Zones 5b, 4a",30
+Millard,Fillmore,84631,5120,-0.4,-18.4,"Zones 6b, 5a",30
+Millard,Horse Hollow Cove Fort 5W UT,84713,6010,-4,-25.6,"Zones 6b, 4a",30
+Millard,Kanosh,84637,4382,-2.2,-20.2,"Zones, 6b, 4b",21
+Millard,Pine Creek,84713,8790,-5.8,-23.8,"Zones 6a, 4b",29
+Millard,Scipio,84656,5314,-14.8,-36.4,"Zones 5b, 3a",30
+Millard,Tule Valley Delta 49W UT,84624,5200,5,-9.4,"Zones 7b, 6a",30
+Morgan,Hardscrabble,84050,7250,-4,-13,"Zones 6b, 5b",26
+Morgan,Morgan,84050,5100,-9.4,-32.8,"Zones 6a, 3b",26
+Piute,Angle,84712,6410,-14.8,-32.8,"Zones 5b, 3b",30
+Piute,Circleville,84723,6050,-9.4,-31,"Zones 6a, 3b",21
+Piute,Kimberly Mine,84766,9129,-9.4,-25.6,"Zones 6a, 4a",29
+Piute,Marysvale,84750,5845,-9.4,-34.6,"Zones 6a, 3b",25
+Rich,Bug Lake,84064,7950,-11.2,-25.6,"Zones 5b, 4a",30
+Rich,Laketown,84038,5980,-9.4,-27.4,"Zones 6a, 4a",30
+Rich,Randolph,84064,6270,-25.6,-41.8,"Zones 4a, 2b",28
+Rich,Woodruff,84086,6315,-27.4,-45.4,"Zones 4a, 2a",30
+Salt Lake,Alta,84092,8730,-7.6,-25.6,"Zones 6a, 4a",29
+Salt Lake,Cottonwood Weir,84117,4986,5,-11.2,"Zones 7a, 5b",30
+Salt Lake,Dry Fork,84006,7093,-2.2,-9.4,"Zones 6b, 6a",25
+Salt Lake,Garfield,84044,4298,8.6,-5.8,"Zones 7b, 6a",25
+Salt Lake,Lookout Peak,84108,8200,-7.6,-23.8,"Zones 6a, 4b",29
+Salt Lake,Mill D North,84121,8967,-5.8,-23.8,"Zones 6a, 4b",29
+Salt Lake,Mountain Dell Dam,84108,5420,-4,-25.6,"Zones 6b, 4a",26
+Salt Lake,Parleys Summit,84109,7500,-4,-14.8,"Zones 6b, 5b",29
+Salt Lake,Salt Lake City Airport,84122,4225,1.4,-11.2,"Zones 7a, 5b",30
+Salt Lake,Silver Lake Brighton,84121,8740,-13,-29.2,"Zones 5b, 4a",30
+San Juan,Aneth Plant,84534,4576,6.8,-16.6,"Zones 7b, 5a",19
+San Juan,Big Indian Valley Lasal 6S U,84530,6960,3.2,-9.4,"Zones 7a, 6a",30
+San Juan,Blanding,84511,6032,5,-13,"Zones 7a, 5b",30
+San Juan,Bluff,84512,4320,1.4,-22,"Zones 7a, 4b",30
+San Juan,Camp Jackson,84535,8968,-0.4,-16.6,"Zones 6b, 5a",29
+San Juan,"Canyonlands, the Neck",84532,5871,5,-9.4,"Zones 7a, 6a",30
+San Juan,"Canyonlands, the Needle",84532,4906,1.4,-14.8,"Zones 7a, 5b",30
+San Juan,Cedar Point,81324,6760,-2.2,-20.2,"Zones 6b, 4b",29
+San Juan,Hovenweep Natl. Monu.,84534,5240,-0.4,-23.8,"Zones 6b, 4b",30
+San Juan,La Sal 1SW,84530,6787,-5.8,-20.2,"Zones 6a, 4b",30
+San Juan,Lasal Mountain,84532,9560,-5.8,-20.2,"Zones 6a, 4b",29
+San Juan,Mexican Hat,84531,4109,6.8,-16.6,"Zones 7b, 5a",30
+San Juan,Natural Bridges Natl Mon.,84533,6508,1.4,-14.8,"Zones 7a, 5b",30
+Sanpete,Beaver Dams,84629,7990,-11.2,-29.2,"Zones 5b, 4a",29
+Sanpete,Dills Camp,84629,9182,-4,-18.4,"Zones 6b, 5a",29
+Sanpete,Ephraim,84627,5498,-14.8,-34.6,"Zones 5b, 3b",30
+Sanpete,Mammoth Cottonwood,84642,8727,-13,-29.2,"Zones 5b, 4a",29
+Sanpete,Manti,84642,5740,-5.8,-23.8,"Zones 6a, 4b",30
+Sanpete,Moroni,84646,5560,-9.4,-25.6,"Zones 6a, 4a",30
+Sevier,Black Flat U.M. Ck,84701,9462,-13,-29.2,"Zones 5b, 4a",29
+Sevier,Koosharem,84744,6930,-13,-32.8,"Zones 5b, 3b",20
+Sevier,Lost Creek Salina 12S Utah,84654,7490,-2.2,-16.6,"Zones 6b, 5a",30
+Sevier,Pickle Keg,84701,9600,-4,-14.8,"Zones 6b, 5b",27
+Sevier,Richfield Radio KSVC,84701,5300,-9.4,-32.8,"Zones 6a, 3b",30
+Sevier,Salina 24 E,84654,7560,-4,-18.4,"Zones 6b, 5a",30
+Sevier,Signal Peak Monroe 5E Utah,84754,8750,-4,-22,"Zones 6b, 4b",30
+Summit,Beaver Divide,84036,8280,-13,-25.6,"Zones 5b, 4a",30
+Summit,Chalk Creek #2,84017,8158,-11.2,-25.6,"Zones 5b, 4a",28
+Summit,Coalville,84017,5550,-13,-25.6,"Zones 5b, 4a",23
+Summit,Echo Dam,84017,5470,-14.8,-32.8,"Zones 5b, 3b",30
+Summit,Hayden Fork,82930,9212,-18.4,-31,"Zones 5a, 3b",29
+Summit,Hewinta,82939,9519,-22,-31,"Zones 4b, 3b",29
+Summit,Hole in Rock,84013,9150,-20.2,-31,"Zones 4b, 3b",29
+Summit,Kamas,84036,6480,-11.2,-31,"Zones 5b, 3b",30
+Summit,Park City,84060,6923,-7.6,-18.4,"Zones 6a, 5a",21
+Summit,Smith & Morehouse,84036,7600,-11.2,-18.4,"Zones 5b, 5a",28
+Summit,Steel Creek Park,82930,10200,-16.6,-38.2,"Zones 5a, 3a",28
+Summit,Thaynes Canyon,84060,9230,-7.6,-23.8,"Zones 6a, 4b",29
+Summit,Wanship Dam,84017,5940,-14.8,-27.4,"Zones 5b, 4a",30
+Tooele,Cedar Mountains Stockton 24W,84071,4000,-2.2,-20.2,"Zones 6b, 4b",28
+Tooele,Dugway,84022,4345,-9.4,-27.4,"Zones 6a, 4a",24
+Tooele,Ibapah,84034,5280,-14.8,-27.4,"Zones 5b, 4a",30
+Tooele,Johnson Pass,84022,5580,-2.2,-18.4,"Zones 6b, 5a",24
+Tooele,Mining Fork,84074,8221,-2.2,-22,"Zones 6b, 4b",29
+Tooele,Rocky Basin Settleme,84080,8900,-7.6,-23.8,"Zones 6a, 4b",29
+Tooele,Tooele,84074,4944,1.4,-16.6,"Zones 7a, 5a",30
+Tooele,Vernon,84080,5471,-11.2,-25.6,"Zones 5b, 4a",29
+Tooele,Wendover Airport,84083,4237,1.4,-18.4,"Zones 7a, 5a",28
+Uintah,Diamond Rim,84078,5500,-7.6,-29.2,"Zones 6a, 4a",30
+Uintah,Dinosaur Natl. Monu. Quarry,84035,4802,-14.8,-32.8,"Zones 5b, 3b",30
+Uintah,Fort Duchesne,84026,5052,-13,-38.2,"Zones 5b, 3a",30
+Uintah,Jensen,84035,4736,-16.6,-36.4,"Zones 5a, 3a",30
+Uintah,Kings Cabin,84066,8724,-16.6,-32.8,"Zones 5a, 3b",28
+Uintah,Mccook Ridge,84066,7000,-5.8,-25.6,"Zones 6a, 4a",30
+Uintah,Mosby Mtn,84039,9510,-14.8,-29.2,"Zones 5b, 4a",29
+Uintah,Ouray 4 NE,84063,4674,-18.4,-40,"Zones 5a, 3a",30
+Uintah,Roosevelt Radio,84066,5014,-18.4,-40,"Zones 5a, 3a",30
+Uintah,Trout Creek,84078,9518,-18.4,-32.8,"Zones 5a, 3b",29
+Uintah,Upper P.R. Canyon Utah,84066,8200,-7.6,-23.8,"Zones 6a, 4b",30
+Uintah,Upper Sand Wash Utah,84035,6300,-7.6,-27.4,"Zones 6a, 4a",30
+Uintah,Vernal Municipal AP,84078,5260,-9.4,-20.2,"Zones 6a, 4b",30
+Utah,Alpine,84004,5070,1.4,-7.6,"Zones 7a, 6a",28
+Utah,Clear Creek #1,84606,8908,-5.8,-22,"Zones 6a, 4b",29
+Utah,Clear Creek #2,84526,7659,-9.4,-25.6,"Zones 6a, 4a",29
+Utah,Fairfield,84013,4880,-13,-29.2,"Zones 5b, 4a",30
+Utah,Pleasant Grove,84062,4692,5,-14.8,"Zones 7a, 5b",29
+Utah,Provo BYU,84602,4570,5,-16.6,"Zones 7a, 5a",30
+Utah,Santaquin Chlorinator,84655,5160,-2.2,-20.2,"Zones 6b, 4b",30
+Utah,Spanish Fork Powerhouse,84660,4720,-0.4,-14.8,"Zones 6b, 5b",30
+Utah,Timpanogos Cave,84003,5740,1.4,-14.8,"Zones 7a, 5b",29
+Utah,Timpanogos Divide,84604,8140,-5.8,-25.6,"Zones 6a, 4a",28
+Utah,Utah Lake Lehi,84043,4505,1.4,-16.6,"Zones 7a, 5a",22
+Wasatch,Daniels Strawberry,84032,8037,-11.2,-29.2,"Zones 5b, 4a",29
+Wasatch,Deer Creek Dam,84032,5270,-11.2,-29.2,"Zones 5b, 4a",30
+Wasatch,Heber,84032,5590,-11.2,-34.6,"Zones 5b, 3b",24
+Wasatch,Snake Crk. Powerhouse,84049,6010,-9.4,-29.2,"Zones 6a, 4a",26
+Wasatch,White River #1,84032,8641,-9.4,-23.8,"Zones 6a, 4b",29
+Washington,Badger Spring Ivins 14W Utah,84738,3990,21.2,12.2,"Zones 9a, 8a",30
+Washington,La Verkin,84745,3194,14,1.4,"Zones 8a, 7a",30
+Washington,Lava Point Utah,84767,7700,-5.8,-16.6,"Zones 6a, 5a",24
+Washington,Little Grass,84725,6100,1.4,-13,"Zones 7a, 5b",29
+Washington,Long Flat,84757,8000,-4,-20.2,"Zones 6b, 4b",28
+Washington,Lytle Rch,84770,2787,14,3.2,"Zones 8a, 7a",29
+Washington,New Harmony,84757,5167,3.2,-18.4,"Zones 7a, 5a",30
+Washington,St. George,84770,2857,19.4,3.2,"Zones 8b, 7a",30
+Washington,Veyo Powerhouse,84782,4600,12.2,-2.2,"Zones 8a, 6b",28
+Washington,Zion National Park,84767,4038,10.4,-5.8,"Zones 8a, 6a",30
+Wayne,Capitol Reef N.P.,84775,5500,6.8,-7.6,"Zones 7b, 6a",30
+Wayne,Donkey Reservoir,84718,9800,-18.4,-29.2,"Zones 5a, 4a",29
+Wayne,Hanksville,84734,4308,-2.2,-14.8,"Zones 6b, 5b",29
+Wayne,Hans Flat Rs,84532,6600,5,-9.4,"Zones 7a, 6a",30
+Wayne,Loa,84747,7070,-11.2,-25.6,"Zones 5b, 4a",21
+Weber,Ben Lomond Peak,84414,8000,-2.2,-20.2,"Zones 6b, 4b",30
+Weber,Ben Lomond Trail,84317,5829,6.8,-7.6,"Zones 7b, 6a",29
+Weber,Bues Canyon Utah,84403,5100,5,-5.8,"Zones 7a, 6a",29
+Weber,Horse Ridge,84324,8160,-7.6,-29.2,"Zones 6a, 4a",29
+Weber,Huntsville Monastery,84317,5140,-16.6,-36.4,"Zones 5a, 3a",24
+Weber,Ogden Hinkley AP,84405,4470,3.2,-7.6,"Zones 7a, 6a",22
+Weber,Pine View Dam,84317,4940,-13,-36.4,"Zones 5b, 3a",30
