@@ -8,4 +8,5 @@ urlpatterns = [
     path('search/', views.search_view, name='search'),
     path('api/chat', views.chat_api, name='chat_api'),
     path('api/search', views.search_api, name='search_api'),
+    path('api/feedback', views.feedback_api, name='feedback_api'),
 ]
