@@ -111,6 +111,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # OpenAI (loaded from .env; do not hardcode)
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
 
-# Backend data (fact sheets DB + county contacts CSV)
+# Backend data (fact sheets DB + county contacts CSV with Score for preferred agents)
 FACT_SHEETS_DB_PATH = BASE_DIR / "Backend" / "fact_sheets.db"
-COUNTY_CONTACTS_CSV_PATH = BASE_DIR / "Backend" / "County Contact info - Sheet1.csv"
+COUNTY_CONTACTS_CSV_PATH = BASE_DIR / "Backend" / "County Contact info - Sheet1 (1).csv"
+HARDINESS_ZONE_CSV_PATH = BASE_DIR / "Backend" / "Hardiness Zone - Sheet1.csv"
+
+# Extension articles (PDF URLs) for search
+EXTENSION_ARTICLES_DB_PATH = BASE_DIR / "extension_articles.db"
+EXTENSION_PRODUCTS_CSV_PATH = BASE_DIR / "extension-products_2026_02_06_with-domain.csv"
+
+# AG Extension Q&A API (12k articles); empty = use local retrieval only
+AG_EXTENSION_API_URL = os.environ.get("AG_EXTENSION_API_URL", "https://fastapi-service-381213932906.us-central1.run.app").strip()

@@ -183,13 +183,12 @@ def generate_openai_response(question, papers, county, language):
     return response.choices[0].message.content
 
 def get_county_contacts(county):
-    """Retrieve ALL contact information for a specific county."""
+    """Retrieve contact information for a specific county, preferring Score = 1 contacts."""
     if contacts_df.empty:
         return []
 
     county_lower = county.lower().strip()
 
-    # DEBUG: Print what we're searching for
     print(f"DEBUG: Searching for county: '{county_lower}'")
     print(f"DEBUG: Total contacts in database: {len(contacts_df)}")
 
@@ -198,13 +197,19 @@ def get_county_contacts(county):
         contacts_df['County'].str.lower().str.contains(county_lower, na=False, regex=False)
     ]
 
-    # DEBUG: Print matches found
     print(f"DEBUG: Matches found: {len(matches)}")
     if not matches.empty:
         print(f"DEBUG: Matched counties: {matches['County'].tolist()}")
 
     if matches.empty:
         return []
+
+    # Prefer contacts with Score = 1; fall back to all contacts if none have Score = 1
+    if 'Score' in matches.columns:
+        priority_matches = matches[matches['Score'] == 1]
+        if not priority_matches.empty:
+            matches = priority_matches
+        # else: no Score = 1 found, use all matches as fallback
 
     # Return list of contact dictionaries
     contacts = []
@@ -219,7 +224,6 @@ def get_county_contacts(county):
 
     print(f"DEBUG: Returning {len(contacts)} contacts")
     return contacts
-
 
 def extract_keywords(text):
     """Extract meaningful keywords from text by removing common words."""
