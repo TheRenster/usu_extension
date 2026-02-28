@@ -1,0 +1,8 @@
+# Django and server
+Django>=4.2
+gunicorn>=21.0.0
+whitenoise>=6.0.0
+
+# App dependencies
+python-dotenv>=1.0.0
+openai>=1.0.0
