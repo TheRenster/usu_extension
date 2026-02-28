@@ -114,6 +114,7 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
 # Backend data (fact sheets DB + county contacts CSV with Score for preferred agents)
 FACT_SHEETS_DB_PATH = BASE_DIR / "Backend" / "fact_sheets.db"
 COUNTY_CONTACTS_CSV_PATH = BASE_DIR / "Backend" / "County Contact info - Sheet1 (1).csv"
+HARDINESS_ZONE_CSV_PATH = BASE_DIR / "Backend" / "Hardiness Zone - Sheet1.csv"
 
 # Extension articles (PDF URLs) for search
 EXTENSION_ARTICLES_DB_PATH = BASE_DIR / "extension_articles.db"

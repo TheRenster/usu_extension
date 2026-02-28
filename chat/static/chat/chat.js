@@ -7,7 +7,6 @@ const countyNameSpan = document.getElementById('countyName');
 const suggestionsSection = document.getElementById('suggestionsSection');
 const mainCategorySelect = document.getElementById('mainCategory');
 const subcategorySelect = document.getElementById('subcategory');
-const imageInput = document.getElementById('imageInput');
 
 let isSending = false;
 
@@ -112,19 +111,16 @@ function removeLoadingBubble() {
 
 async function sendMessage() {
     const message = (messageInput && messageInput.value ? messageInput.value.trim() : '') || '';
-    const hasImage = imageInput && imageInput.files && imageInput.files.length > 0;
-    if (!message && !hasImage) return;
+    if (!message) return;
     if (isSending) return;
 
     isSending = true;
     hideSuggestions();
 
-    const userContent = message || '(User sent a photo for identification)';
-    addMessage(userContent, true);
+    addMessage(message, true);
     messageInput.value = '';
     sendButton.disabled = true;
     if (messageInput) messageInput.disabled = true;
-    if (imageInput) imageInput.disabled = true;
 
     addLoadingBubble();
     var loadingShownAt = Date.now();
@@ -148,22 +144,12 @@ async function sendMessage() {
     const csrftoken = getCookie('csrftoken');
 
     var body = {
-        message: message || '',
+        message: message,
         county: county,
         category: category,
         subcategory: subcategory,
         chat_history: chatHistory.slice(-20)
     };
-
-    if (hasImage && imageInput.files[0]) {
-        try {
-            const base64 = await readFileAsBase64(imageInput.files[0]);
-            if (base64) body.image_base64 = base64;
-        } catch (e) {
-            console.error('Image read failed', e);
-        }
-        imageInput.value = '';
-    }
 
     try {
         const response = await fetch('/api/chat', {
@@ -184,7 +170,7 @@ async function sendMessage() {
         removeLoadingBubble();
         addMessage(text, false);
 
-        chatHistory.push({ role: 'user', content: userContent });
+        chatHistory.push({ role: 'user', content: message });
         chatHistory.push({ role: 'assistant', content: text });
         if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
     } catch (e) {
@@ -193,30 +179,14 @@ async function sendMessage() {
         await new Promise(function (r) { setTimeout(r, wait); });
         removeLoadingBubble();
         addMessage('Error: Could not connect to server', false);
-        chatHistory.push({ role: 'user', content: userContent });
+        chatHistory.push({ role: 'user', content: message });
         chatHistory.push({ role: 'assistant', content: 'Error: Could not connect to server' });
     } finally {
         sendButton.disabled = false;
         if (messageInput) messageInput.disabled = false;
-        if (imageInput) imageInput.disabled = false;
         isSending = false;
         if (messageInput) messageInput.focus();
     }
-}
-
-function readFileAsBase64(file) {
-    return new Promise(function (resolve, reject) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            var result = reader.result;
-            if (result && result.indexOf('base64,') !== -1) {
-                result = result.split('base64,')[1] || '';
-            }
-            resolve(result || null);
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
 }
 
 // Suggested prompts: click inserts and submits
