@@ -2,7 +2,7 @@
 Category and subcategory options for chat (aligned with Backend Text mining).
 """
 
-MAIN_CATEGORIES = ["Insects", "Diseases", "Other"]
+MAIN_CATEGORIES = ["Other", "Insects", "Diseases"]
 
 SUBCATEGORY_MAP = {
     "Insects": [

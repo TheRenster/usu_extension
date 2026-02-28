@@ -9,6 +9,7 @@ const mainCategorySelect = document.getElementById('mainCategory');
 const subcategorySelect = document.getElementById('subcategory');
 
 let isSending = false;
+let conversationId = null;
 
 // Chat history for context (max 20 messages)
 var chatHistory = [];
@@ -88,6 +89,63 @@ function addMessage(text, isUser) {
             a.setAttribute('target', '_blank');
             a.setAttribute('rel', 'noopener');
         });
+
+        // Attach feedback controls for Agnes responses
+        const feedbackDiv = document.createElement('div');
+        feedbackDiv.className = 'feedback-controls';
+
+        const labelSpan = document.createElement('span');
+        labelSpan.className = 'feedback-label';
+        labelSpan.textContent = 'Was this helpful?';
+
+        const yesButton = document.createElement('button');
+        yesButton.type = 'button';
+        yesButton.className = 'feedback-button';
+        yesButton.textContent = 'Yes';
+
+        const noButton = document.createElement('button');
+        noButton.type = 'button';
+        noButton.className = 'feedback-button';
+        noButton.textContent = 'No';
+
+        async function handleFeedback(rating) {
+            if (!conversationId) {
+                feedbackDiv.textContent = 'Feedback saved for this session.';
+                return;
+            }
+            const csrftoken = getCookie('csrftoken');
+            yesButton.disabled = true;
+            noButton.disabled = true;
+            try {
+                await fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify({
+                        conversation_id: conversationId,
+                        rating: rating,
+                        comment: ''
+                    })
+                });
+                feedbackDiv.textContent = 'Thanks for your feedback.';
+            } catch (e) {
+                feedbackDiv.textContent = 'Could not send feedback right now.';
+            }
+        }
+
+        yesButton.addEventListener('click', function () {
+            handleFeedback('up');
+        });
+        noButton.addEventListener('click', function () {
+            handleFeedback('down');
+        });
+
+        feedbackDiv.appendChild(labelSpan);
+        feedbackDiv.appendChild(yesButton);
+        feedbackDiv.appendChild(noButton);
+        messageDiv.appendChild(feedbackDiv);
     }
     chatMessages.appendChild(messageDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -148,7 +206,8 @@ async function sendMessage() {
         county: county,
         category: category,
         subcategory: subcategory,
-        chat_history: chatHistory.slice(-20)
+        chat_history: chatHistory.slice(-20),
+        conversation_id: conversationId
     };
 
     try {
@@ -161,6 +220,14 @@ async function sendMessage() {
             body: JSON.stringify(body)
         });
         const data = await response.json();
+        if (data.conversation_id) {
+            conversationId = data.conversation_id;
+            try {
+                sessionStorage.setItem('conversation_id', conversationId);
+            } catch (e) {
+                // Ignore storage errors
+            }
+        }
         var text = response.ok ? (data.reply || 'Error: No reply received') : (data.error || 'Something went wrong.');
 
         var elapsed = Date.now() - loadingShownAt;
@@ -208,3 +275,18 @@ messageInput.addEventListener('keypress', function(e) {
 
 // Focus input on load
 messageInput.focus();
+
+// Restore existing conversation for this tab if available
+try {
+    const storedConversationId = sessionStorage.getItem('conversation_id');
+    if (storedConversationId) {
+        conversationId = storedConversationId;
+    }
+} catch (e) {
+    // Ignore storage errors
+}
+
+// Initial greeting from Agnes
+if (chatMessages) {
+    addMessage("Hi! I'm Agnes, your Extension office assistant. Go ahead and ask me a question about your farm, garden, or local Extension resources.", false);
+}
