@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatter the Chatty Chatbot</title>
+    <title>Agnes – USU Extension Assistant</title>
     {% load static %}
     <style>
         * {
@@ -146,6 +146,35 @@
             border-top: 1px solid #e8ecef;
             gap: 12px;
             background-color: #ffffff;
+            flex-wrap: wrap;
+        }
+
+        .chat-input-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .chat-category-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .chat-category-row label {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .chat-category-row select {
+            padding: 8px 12px;
+            border: 1px solid #e8ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #fafbfc;
         }
 
         .chat-input {
@@ -200,14 +229,22 @@
 
         .county-badge {
             display: inline-block;
+            margin-top: 8px;
+        }
+        .county-badge a {
+            display: inline-block;
             background: rgba(255, 255, 255, 0.2);
             color: white;
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: 500;
-            margin-top: 8px;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .county-badge a:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         /* Empty state: suggested prompts */
@@ -284,14 +321,49 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        .feedback-controls {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .feedback-label {
+            font-weight: 500;
+        }
+
+        .feedback-button {
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid #e5e7eb;
+            background-color: #f9fafb;
+            color: #374151;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .feedback-button:hover {
+            background-color: #edf2f7;
+            border-color: #cbd5e0;
+        }
+
+        .feedback-button:disabled {
+            cursor: default;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <h1>USU Extension Assistant</h1>
+            <h1>Agnes – USU Extension Assistant</h1>
             <div class="county-badge" id="countyBadge" style="display: none;">
-                County: <span id="countyName"></span>
+                <a href="{% url 'county_select' %}">County: <span id="countyName"></span></a>
             </div>
         </div>
         <div class="chat-messages" id="chatMessages">
@@ -306,18 +378,35 @@
             </div>
         </div>
         <div class="chat-input-container">
-            <input 
-                type="text" 
-                class="chat-input" 
-                id="messageInput" 
-                placeholder="Type your message here..."
-                autocomplete="off"
-            >
-            <button class="send-button" id="sendButton">Send</button>
+            <div class="chat-category-row">
+                <label for="mainCategory">Category:</label>
+                <select id="mainCategory">
+                    {% for cat in main_categories %}
+                    <option value="{{ cat }}">{{ cat }}</option>
+                    {% endfor %}
+                </select>
+                <label for="subcategory">Subcategory:</label>
+                <select id="subcategory">
+                    {% for sub in subcategory_map.Other %}
+                    <option value="{{ sub }}">{{ sub }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="chat-input-row">
+                <input 
+                    type="text" 
+                    class="chat-input" 
+                    id="messageInput" 
+                    placeholder="Ask Agnes a question about your farm, garden, or local Extension resources..."
+                    autocomplete="off"
+                >
+                <button class="send-button" id="sendButton">Send</button>
+            </div>
         </div>
     </div>
 
+    {{ subcategory_map|json_script:"subcategory-map-json" }}
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="{% static 'chat/chat.js' %}?v=2"></script>
+    <script src="{% static 'chat/chat.js' %}?v=3"></script>
 </body>
 </html>
